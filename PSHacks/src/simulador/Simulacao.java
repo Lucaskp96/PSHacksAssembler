@@ -14,30 +14,30 @@ public class Simulacao extends BRegistradores {
     private short variavelTemporaria;
     private static String salvaOperacao;
     
-    public void decodificar (String valorA, String comp, String dest, String jump){
+    public void decodificar (String valorAzinho, String comp, String dest, String jump){
         
         switch (comp){
             
-            case "0101010":
-                this.variavelTemporaria = 0;
-                salvaOperacao = "0";
+            case "101010":
+                if ("0".equals(valorAzinho)){
+                    this.variavelTemporaria = 0;
+                    salvaOperacao = "0";
+                }
                 break;
             
-            case "0111111":
-                this.variavelTemporaria = 1;
-                salvaOperacao = "1";
+            case "111111":
+                if ("0". equals (valorAzinho)){
+                    this.variavelTemporaria = 1;
+                    salvaOperacao = "1";
+                }
                 break;
                 
-            case "0111010":
-                this.variavelTemporaria = -1;
-                salvaOperacao = "-1";
-                break;
                 
-            case "0001100":
-                this.variavelTemporaria = getRegistradorD();
-                salvaOperacao = "D";
-                break
+            
                 
+            
+                
+            
         }
     }
     
