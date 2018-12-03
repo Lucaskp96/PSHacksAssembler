@@ -11,7 +11,6 @@ public class CodigoAsm {
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
     private ArrayList<String> instrucoes;
-    private TabelaSimbolos tabelaSimbolos;
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
@@ -21,12 +20,30 @@ public class CodigoAsm {
     public CodigoAsm(){
         
          setInstrucoes(new ArrayList<>());
-         setTabelaSimbolos(new TabelaSimbolos());
     }
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
+    /**
+     * Insere uma linha de instrucao na estrutura.
+     * @param linha, linha que deve ser inserida na estrutura.
+     * @author Micael Popping.
+     */
+    public void inserirLinha(String linha){
+        
+        instrucoes.add(linha);
+    }
     
+    /**
+     * Pega uma linha da estrutura.
+     * @param indiceLinha, indice da linha que deve ser pega
+     * @return conteudo da linha.
+     * @author Micael Popping.
+     */
+    public String pegarLinha(int indiceLinha){
+        
+        return instrucoes.get(indiceLinha);
+    }
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
@@ -40,15 +57,6 @@ public class CodigoAsm {
         this.instrucoes = instrucoes;
     }
     
-    /**
-     * Altera o valor de TabelaSimbolos.
-     * @param tabelaSimbolos, novo valor para tabelaSimbolos.
-     * @author Micael Popping.
-     */
-    private void setTabelaSimbolos(TabelaSimbolos tabelaSimbolos){
-        
-        this.tabelaSimbolos = tabelaSimbolos;
-    }
-    
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    
 }
