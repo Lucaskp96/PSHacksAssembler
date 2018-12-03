@@ -11,6 +11,7 @@ public class CodigoAsm {
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
     private ArrayList<String> instrucoes;
+    private int quantidadeLinhas;
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
@@ -19,7 +20,8 @@ public class CodigoAsm {
      */
     public CodigoAsm(){
         
-         setInstrucoes(new ArrayList<>());
+        setInstrucoes(new ArrayList<>());
+        setQuantidadeLinhas(0);
     }
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -32,6 +34,7 @@ public class CodigoAsm {
     public void inserirLinha(String linha){
         
         instrucoes.add(linha);
+        incrementarQuantidadeLinhas();
     }
     
     /**
@@ -48,6 +51,17 @@ public class CodigoAsm {
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
     /**
+     * Incrementa a quantidade de linhas.
+     * @author Micael Popping.
+     */
+    private void incrementarQuantidadeLinhas(){
+        
+        setQuantidadeLinhas(getQuantidadeLinhas() + 1);
+    }
+    
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    
+    /**
      * Altera o valor de instrucoes.
      * @param instrucoes, novo valor para instrucoes.
      * @author Micael Popping.
@@ -55,6 +69,26 @@ public class CodigoAsm {
     private void setInstrucoes(ArrayList<String> instrucoes){
         
         this.instrucoes = instrucoes;
+    }
+    
+    /**
+     * Altera o valor de quantidadeLinhas.
+     * @param quantidadeLinhas, novo valor para quantidadeLinhas.
+     * @author Micael Popping.
+     */
+    private void setQuantidadeLinhas(int quantidadeLinhas){
+        
+        this.quantidadeLinhas = quantidadeLinhas;
+    }
+    
+    /**
+     * Retorna o valor de quantidadeLinhas.
+     * @return valor de quantidadeLinhas.
+     * @author Micael Popping.
+     */
+    public int getQuantidadeLinhas(){
+     
+        return quantidadeLinhas;
     }
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
