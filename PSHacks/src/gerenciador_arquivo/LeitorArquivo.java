@@ -12,18 +12,17 @@ public class LeitorArquivo {
     
     private BufferedReader bufferLeitura;
     private String nomeArquivo;
-    boolean valido;
     
-   //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
     /**
      * CONSTRUTOR.
-     * @param nome do arquivo que deve ser aberto.
+     * @param nomeArquivo, nome do arquivo que deve ser aberto.
      * @author Micael Popping
      */
     LeitorArquivo(String nomeArquivo){
         
-        verificarExtensaoArquivo(nomeArquivo);
+        setNomeArquivo(nomeArquivo);
         
         try{
             
@@ -34,7 +33,7 @@ public class LeitorArquivo {
         }  
     }
     
-    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
     /**
      * Fecha o leitor de arquivo.
@@ -74,35 +73,12 @@ public class LeitorArquivo {
         
         return linha;
     }
-    
-    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    
-    private boolean verificarExtensaoArquivo(String nomeArquivo){
-        
-        int indice;
-        String auxiliar;
-        
-        if ((indice = nomeArquivo.indexOf('.')) == -1)
-            return false;
-        
-        auxiliar = nomeArquivo.substring(indice + 1, nomeArquivo.length());
-        
-        if(auxiliar.equals("asm")){
-            
-            auxiliar = nomeArquivo.substring(0, indice);
-            setNomeArquivo(auxiliar);
-            setValido(true);
-        } else
-            setValido(false);
-        
-        return getValido();
-    }
-    
-    //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
     /**
      * Altera o valor de bufferLeitura.
-     * @param novo valor para bufferLeitura.
+     * @param bufferLeitura, novo valor para bufferLeitura.
      * @author Micael Popping.
      */
     private void setBufferLeitura(BufferedReader bufferLeitura){
@@ -112,24 +88,18 @@ public class LeitorArquivo {
     
     /**
      * Altera o valor de nomeArquivo.
-     * @param novo valor para nomeArquivo.
+     * @param nomeArquivo, novo valor para nomeArquivo.
      * @author Micael Popping.
      */
     private void setNomeArquivo(String nomeArquivo){
         
-        this.nomeArquivo = nomeArquivo;
+        int indice;
+        
+        indice = nomeArquivo.indexOf('.');
+        
+        this.nomeArquivo = nomeArquivo.substring(0, indice); 
     }
     
-     /**
-     * Altera o valor de valido.
-     * @param novo valor para valido.
-     * @author Micael Popping.
-     */
-    private void setValido(boolean valido){
-        
-        this.valido = valido;
-    }
-
     /**
      * Retorna o valor de bufferLeitura.
      * @return valor de bufferLeitura.
@@ -145,20 +115,10 @@ public class LeitorArquivo {
      * @return valor de nomeArquivo.
      * @author Micael Popping.
      */
-    private String getNomeArquivo(){
+    public String getNomeArquivo(){
         
         return nomeArquivo;
     }
-    
-    /**
-     * Retorna o valor de valido.
-     * @return valor de valido.
-     * @author Micael Popping.
-     */
-    public boolean getValido(){
         
-        return valido;
-    }
-    
-   //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 }
