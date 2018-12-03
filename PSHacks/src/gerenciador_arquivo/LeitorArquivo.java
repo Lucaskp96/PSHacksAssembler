@@ -20,7 +20,7 @@ public class LeitorArquivo {
      * @param nomeArquivo, nome do arquivo que deve ser aberto.
      * @author Micael Popping
      */
-    LeitorArquivo(String nomeArquivo){
+    public LeitorArquivo(String nomeArquivo){
         
         setNomeArquivo(nomeArquivo);
         

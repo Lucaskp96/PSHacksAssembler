@@ -22,18 +22,36 @@ public class Montador {
      */
     public static boolean gerarAquivoHacks(String nomeArquivo){
         
-        LeitorArquivo leitor = null;
+        LeitorArquivo leitor;
+        String linha;
         
         if(!verificarExtensaoArquivo(nomeArquivo, "asm"))
             return false;
         
-        //FAZER
+        leitor = new LeitorArquivo(nomeArquivo);
+        
+        while(true){
+            
+            if((linha = leitor.proximaLinha()) == null)
+                break;
+            
+            //FAZER
+        }
+        
+        leitor = leitor.close();
         
         return true;
     }
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
+    /**
+     * Verifica se a extensão de um  arquivo é uma extensão especificada.
+     * @param nomeArquivo, nome do arquivo que deve ser verificado.
+     * @param extensao, extensão que deve ser verificada.
+     * @return valor logico, sendo true se a extensão do arquivo bater com a especificada e false caso contrario.
+     * @author Micael Popping.
+     */
     private static boolean verificarExtensaoArquivo(String nomeArquivo, String extensao){
         
         int indice;
