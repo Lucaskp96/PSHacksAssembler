@@ -19,13 +19,14 @@ public class Montador {
     public static boolean gerarAquivoHacks(String nomeArquivo){
         
         CodigoAsm codigoAsm = null;
+        //ProcessadorMarcros processadorMacros = new ProcessadorMacros(nomeArquivo);
         
         if(!verificarExtensaoArquivo(nomeArquivo, "asm"))
             return false;
         
-        codigoAsm = Montador.retirarDoArquivo(nomeArquivo);
- 
-        //FAZER
+        //codigoAsm = processarMacros(nomeArquivo);
+        
+        Montador.etapa1(codigoAsm);
         
         return true;
     }
@@ -61,7 +62,7 @@ public class Montador {
      * @param nomeArquivo, nome do arquivo que sera convertido em uma estrutura de codigo asm.
      * @return uma estrutura equivalente ao arquivo contendo o codigo asm.
      * @author Micael Popping.
-     */
+     *
     private static CodigoAsm retirarDoArquivo(String nomeArquivo){
         
         LeitorArquivo leitor = new LeitorArquivo(nomeArquivo);
@@ -82,6 +83,22 @@ public class Montador {
         leitor = leitor.close();
         
         return codigoAsm;
+    }
+    */
+    
+    /**
+     * A etapa 1 percorre o codigo verificando a sintaxe e montando a tabela de simbolos.
+     */
+    private static TabelaSimbolos etapa1(CodigoAsm codigoAsm){
+        
+        String linha;
+        
+        for(int i = 0, limite = codigoAsm.getQuantidadeLinhas(); i < limite; i++){
+            
+            linha = codigoAsm.pegarLinha(i);
+            
+            //FAZER
+        }
     }
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
