@@ -34,7 +34,7 @@ class InstrucoesC {
      */
     private void startComp(){
         
-        comp = new HashMap<>(38); //Inicia a HashMap com 35 posicoes, sendo assim consegue colocar as 26 possibilidades sem rehash
+        comp = new HashMap<>(38); //Inicia a HashMap com 38 posicoes, sendo assim consegue colocar as 28 possibilidades sem rehash
         
         comp.put("0", "0101010");
         comp.put("1", "0111111");
@@ -64,6 +64,44 @@ class InstrucoesC {
         comp.put("M-D", "1000111");
         comp.put("D&M", "1000000");
         comp.put("D|M", "1010101"); 
+    }
+    
+    /**
+     * Inicia o valor de dest.
+     * @return uma estrutura HashMap.
+     * @author Micael Popping.
+     */
+    private void startDest(){
+        
+        dest = new HashMap<>(11); //Inicia a HashMap com 11 posicoes, sendo assim consegue colocar as 8 possibilidades sem rehash
+        
+        dest.put("", "000");
+        dest.put("M", "001");
+        dest.put("D", "010");
+        dest.put("MD", "011");
+        dest.put("A", "100");
+        dest.put("AM", "101");
+        dest.put("AD", "110");
+        dest.put("AMD", "111");
+    }
+    
+    /**
+     * Inicia o valor de dest.
+     * @return uma estrutura HashMap.
+     * @author Micael Popping.
+     */
+    private void startJump(){
+        
+        jump = new HashMap<>(11); //Inicia a HashMap com 11 posicoes, sendo assim consegue colocar as 8 possibilidades sem rehash
+        
+        jump.put("", "000");
+        jump.put("JGT", "001");
+        jump.put("JEQ", "010");
+        jump.put("JGE", "011");
+        jump.put("JLT", "100");
+        jump.put("JNE", "101");
+        jump.put("JLE", "110");
+        jump.put("JMP", "111");
     }
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
