@@ -23,6 +23,8 @@ class InstrucoesC {
     public InstrucoesC(){
         
         startComp();
+        startDest();
+        startJump();
     }
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -86,7 +88,7 @@ class InstrucoesC {
     }
     
     /**
-     * Inicia o valor de dest.
+     * Inicia o valor de jump.
      * @return uma estrutura HashMap.
      * @author Micael Popping.
      */
