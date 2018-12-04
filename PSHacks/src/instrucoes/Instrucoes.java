@@ -8,7 +8,7 @@ public class Instrucoes {
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
-    private InstrucoesC instrucoesC;
+    private static InstrucoesC instrucoesC;
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
@@ -36,14 +36,33 @@ public class Instrucoes {
         if(instrucao.charAt(0) == '@'){
             
             analise = "A";
-            analise+= instrucao.substring(1, instrucao.length());
+            analise += instrucao.substring(1, instrucao.length());
             
             return analise;
         }
         
-        //FAZER
+        if(instrucao.charAt(0) == '('){
+            
+            if(instrucao.charAt(instrucao.length() - 1) != ')')
+                return null;
+            
+            analise = "L";
+            analise += instrucao.substring(1, instrucao.length() - 1);
+            
+            return analise;
+        }
+        /*
+        if(instrucao.charAt(0) == '#'){
+            
+            FAZER
+        }
         
-        return "XX";
+        if(instrucoesC.isTipo(instrucao)){
+            
+            FAZER
+        }
+        */
+        return null;
     }
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
