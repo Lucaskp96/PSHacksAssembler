@@ -8,7 +8,6 @@ public class Simbolo {
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
-    private String simbolo;
     private int endereco;
     private boolean label;
     
@@ -16,11 +15,12 @@ public class Simbolo {
 
     /**
      * CONSTRUTOR.
-     * @param simbolo.
      * @author Micael Popping.
      */
-    public Simbolo(String simbolo){
+    public Simbolo(){
         
+        setEndereco(-1);
+        setLabel(false);
     }
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -29,7 +29,25 @@ public class Simbolo {
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
+    /**
+     * Alterar o valor de endereco.
+     * @param endereco, novo valor para endereco.
+     * @author Micael Popping.
+     */
+    private void setEndereco(int endereco){
+        
+        this.endereco = endereco;
+    }
     
+    /**
+     * Alterar o valor de label.
+     * @param label, novo valor para label.
+     * @author Micael Popping.
+     */
+    private void setLabel(boolean label){
+        
+        this.label = label;
+    }
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=    
 }
