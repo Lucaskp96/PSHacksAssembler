@@ -1,6 +1,6 @@
 package montador;
 
-import gerenciador_arquivo.LeitorArquivo;
+import instrucoes.Instrucoes;
 
 /**
  * Classe responsavel por metodos que montam o codigo assembly em linguagem de maquina.
@@ -18,15 +18,14 @@ public class Montador {
      */
     public static boolean gerarAquivoHacks(String nomeArquivo){
         
-        CodigoAsm codigoAsm = null;
-        //ProcessadorMarcros processadorMacros = new ProcessadorMacros(nomeArquivo);
+        CodigoHacks codigoHacks = null;
         
         if(!verificarExtensaoArquivo(nomeArquivo, "asm"))
             return false;
         
-        //codigoAsm = processarMacros(nomeArquivo);
+        codigoHacks = montarCodigoHacks(nomeArquivo);
         
-        Montador.etapa1(codigoAsm);
+        //escreverArquivoHacks(codigoHacks, nomeArquivo);
         
         return true;
     }
@@ -87,18 +86,61 @@ public class Montador {
     */
     
     /**
+     * Monta o codigo, em duas etapas.
+     * @param nomeArquivo, nome do arquivo .asm que vai ser montado.
+     * @author Micael Popping.
+     */
+    private static CodigoHacks montarCodigoHacks(String nomeArquivo){
+        
+        CodigoAsm codigoAsm = null;
+        //ProcessadorMacros processadorMacros = new ProcessadorMacros();
+        CodigoHacks codigoHacks = new CodigoHacks();
+        
+        //codigoAsm = processarMacros(nomeArquivo);
+        //codigoHacks.setTabelaSimbolos(etapa1(codigoAsm, processadorMacros));
+        
+        etapa2(codigoAsm, codigoHacks);
+        
+        return codigoHacks;
+    }
+    
+    /**
      * A etapa 1 percorre o codigo verificando a sintaxe e montando a tabela de simbolos.
+     * @param codigoAsm, codigo assembly que está sendo montado.
+     * @param processadorMacros, processador de macros do codigo asm.
+     * @return a tabela de simbolos do codigo.
+     * @author Micael Popping.
      */
     private static TabelaSimbolos etapa1(CodigoAsm codigoAsm){
         
-        String linha;
+        String analise;
+        TabelaSimbolos tabelaSimbolos = new TabelaSimbolos();
+        Instrucoes instrucoes = new Instrucoes();
         
         for(int i = 0, limite = codigoAsm.getQuantidadeLinhas(); i < limite; i++){
             
-            linha = codigoAsm.pegarLinha(i);
-            
+            if((analise = instrucoes.analisarInstrucao(codigoAsm.pegarLinha(i))) == null)
+                return null;
+                       
+            if(analise.charAt(0) == 'A');
+                //tabelaSimbolos.inserir(analise.substring(1, analise.length());
+
             //FAZER
         }
+        
+        return tabelaSimbolos;
+    }
+    
+    /**
+     * A etapa 2 percorre o codigo substituindo os simbolos e gerando as instrucoes binarias.
+     * @param codigoAsm, codigo assembly que está sendo montado.
+     * @param codigoHacks, o codigo hacks que está sendo gerado.
+     * @author Micael Popping.
+     */
+    private static void etapa2(CodigoAsm codigoAsm, CodigoHacks codigoHacks){
+        /*
+        FAZER
+        */  
     }
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
