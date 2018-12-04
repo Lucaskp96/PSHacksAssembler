@@ -28,6 +28,7 @@ public class BRegistradores {
     }
     
      public void setMemoriaDeDados(){
+        i = 0;
         while (i < 32768){
             memoriaDeDados[i] = 0;
             i++;
@@ -35,6 +36,8 @@ public class BRegistradores {
     }
     
     public void setMemoriaDeInstrucoes(){
+        i = 0;
+
         while (i < 32768){
             memoriaDeInstrucoes[i] = null;
             i++;
