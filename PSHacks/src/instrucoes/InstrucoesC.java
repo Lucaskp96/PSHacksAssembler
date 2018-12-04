@@ -10,9 +10,9 @@ class InstrucoesC {
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
-    private HashMap<String, String> comp;
-    private HashMap<String, String> dest;
-    private HashMap<String, String> jump;
+    private static final HashMap<String, String> COMP = startComp();
+    private static final HashMap<String, String> DEST = startDest();
+    private static final HashMap<String, String> JUMP = startJump();
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
@@ -21,10 +21,6 @@ class InstrucoesC {
      * @author Micael Popping.
      */
     public InstrucoesC(){
-        
-        startComp();
-        startDest();
-        startJump();
     }
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -34,9 +30,9 @@ class InstrucoesC {
      * @return uma estrutura HashMap.
      * @author Micael Popping.
      */
-    private void startComp(){
+    private static HashMap<String, String> startComp(){
         
-        comp = new HashMap<>(38); //Inicia a HashMap com 38 posicoes, sendo assim consegue colocar as 28 possibilidades sem rehash
+        HashMap<String, String> comp = new HashMap<>(38); //Inicia a HashMap com 38 posicoes, sendo assim consegue colocar as 28 possibilidades sem rehash
         
         comp.put("0", "0101010");
         comp.put("1", "0111111");
@@ -66,6 +62,8 @@ class InstrucoesC {
         comp.put("M-D", "1000111");
         comp.put("D&M", "1000000");
         comp.put("D|M", "1010101"); 
+        
+        return comp;
     }
     
     /**
@@ -73,9 +71,9 @@ class InstrucoesC {
      * @return uma estrutura HashMap.
      * @author Micael Popping.
      */
-    private void startDest(){
+    private static HashMap<String, String> startDest(){
         
-        dest = new HashMap<>(11); //Inicia a HashMap com 11 posicoes, sendo assim consegue colocar as 8 possibilidades sem rehash
+        HashMap<String, String> dest = new HashMap<>(11); //Inicia a HashMap com 11 posicoes, sendo assim consegue colocar as 8 possibilidades sem rehash
         
         dest.put("", "000");
         dest.put("M", "001");
@@ -85,6 +83,8 @@ class InstrucoesC {
         dest.put("AM", "101");
         dest.put("AD", "110");
         dest.put("AMD", "111");
+        
+        return dest;
     }
     
     /**
@@ -92,9 +92,9 @@ class InstrucoesC {
      * @return uma estrutura HashMap.
      * @author Micael Popping.
      */
-    private void startJump(){
+    private static HashMap<String, String> startJump(){
         
-        jump = new HashMap<>(11); //Inicia a HashMap com 11 posicoes, sendo assim consegue colocar as 8 possibilidades sem rehash
+        HashMap<String, String> jump = new HashMap<>(11); //Inicia a HashMap com 11 posicoes, sendo assim consegue colocar as 8 possibilidades sem rehash
         
         jump.put("", "000");
         jump.put("JGT", "001");
@@ -104,6 +104,8 @@ class InstrucoesC {
         jump.put("JNE", "101");
         jump.put("JLE", "110");
         jump.put("JMP", "111");
+        
+        return jump;
     }
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
