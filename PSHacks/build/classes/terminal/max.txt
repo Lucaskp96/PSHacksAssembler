@@ -1,0 +1,26 @@
+@r1
+D=M
+@r2
+D=D-M
+@OUTPUT_FIRST0
+D;JGT
+@r2
+D=M
+@OUTPUT_D0
+0;JMP
+(OUTPUT_FIRST0)
+@r1
+D=M
+(OUTPUT_D0)
+@$2
+M=D
+add a b 
+(test) 
+(INFINITE_LOOP1)
+@INFINITE_LOOP1
+0;JMP
+@R0 
+D=M 
+(test2) 
+@R2 
+M=D 
