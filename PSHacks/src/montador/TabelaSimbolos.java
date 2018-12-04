@@ -1,6 +1,6 @@
 package montador;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Classe que simula a tabela de simbolos.
@@ -10,7 +10,7 @@ class TabelaSimbolos {
  
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
-    private ArrayList<Simbolo> simbolos;
+    private HashMap<String, Simbolo> simbolos;
     private int quantidadeDados;
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -20,13 +20,59 @@ class TabelaSimbolos {
      */
     public TabelaSimbolos(){
         
-        setSimbolos(new ArrayList<>());
+        setSimbolos(new HashMap<>());
         setQuantidadeDados(0);
     }
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
+    /**
+     * Inser um novo simbolo na tabela de simbolos.
+     * @param simbolo, simbolo que deve ser inserido na tabela.
+     * @return true se o simbolo foi inserido e false se o simbolo já estava na tabela.
+     * @author Micael Popping.
+     */
+    public boolean inserirSimbolo(String simbolo){
+        
+        if(!contemSimbolo(simbolo))
+            return false;
+        
+        getSimbolos().put(simbolo, new Simbolo());
+        incrementarQuantidadeDados();
+        
+        return true;
+    }
     
+    /**
+     * Verifica se o simbolo está presente na tabela.
+     * @param simbolo, que dever ser verificada a existencia na tabela.
+     * @return true se o simbolo estiver presente e false caso contrario.
+     * @author Micael Popping.
+     */
+    public boolean contemSimbolo(String simbolo){
+        
+        return getSimbolos().containsKey(simbolo);
+    }
+    
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    
+    /**
+     * Incrementa o valor de quantidadeDados.
+     * @author Micael Popping.
+     */
+    private void incrementarQuantidadeDados(){
+        
+        setQuantidadeDados(getQuantidadeDados() + 1);
+    }
+    
+    /**
+     * Decrementa o valor de quantidadeDados.
+     * @author Micael Popping.
+     */
+    private void decrementarQuantidadeDados(){
+        
+        setQuantidadeDados(getQuantidadeDados() - 1);
+    }
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
@@ -35,7 +81,7 @@ class TabelaSimbolos {
      * @param simbolos, novo valor para simbolos.
      * @author Micael Popping.
      */
-    private void setSimbolos(ArrayList<Simbolo> simbolos){
+    private void setSimbolos(HashMap<String, Simbolo> simbolos){
         
         this.simbolos = simbolos;
     }
@@ -50,5 +96,26 @@ class TabelaSimbolos {
         this.quantidadeDados = quantidadeDados;
     }
     
+    /**
+     * Retorna o valor de simbolos.
+     * @return o valor de simbolos.
+     * @author Micael Popping.
+     */
+    private HashMap<String, Simbolo> getSimbolos(){
+        
+        return simbolos;
+    }
+    
+    /**
+     * Retorna o valor de quantidadeDados.
+     * @return o valor de quantidadeDados.
+     * @author Micael Popping.
+     */
+    private int getQuantidadeDados(){
+        
+        return quantidadeDados;
+    }
+    
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    
 }
