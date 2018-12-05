@@ -71,7 +71,7 @@ public class Montador {
         
         if((tabelaSimbolos = etapa1(codigoAsm, nomeArquivo)) == null)
             return null;
-        //codigoHacks.setTabelaSimbolos(tabelaSimbolos);
+        codigoHacks.setTabelaSimbolos(tabelaSimbolos);
         tabelaSimbolos = null;
         
         etapa2(codigoAsm, codigoHacks);
@@ -105,8 +105,6 @@ public class Montador {
             
             if(analise.charAt(0) == 'A')
                 tabelaSimbolos.inserir(analise.substring(1, analise.length()));
-
-            
         }
         
         return tabelaSimbolos;
