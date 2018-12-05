@@ -6,7 +6,7 @@ import java.util.HashMap;
  * Classe que simula a tabela de simbolos.
  * @author Micael Popping
  */
-class TabelaSimbolos {
+public class TabelaSimbolos {
  
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
@@ -34,7 +34,7 @@ class TabelaSimbolos {
      */
     public boolean inserir(String simbolo){
         
-        if(!contem(simbolo))
+        if(contem(simbolo))
             return false;
         
         getSimbolos().put(simbolo, new Simbolo());
@@ -43,7 +43,22 @@ class TabelaSimbolos {
         return true;
     }
     
-    //inserir
+    /**
+     * Inserir um novo simbolo na tabela de simbolos, sabe-se que é um label.
+     * @param simbolo, simbolo que deve ser inserido na tabela.
+     * @param endereco, endereco do simbolo que está sendo inserido.
+     * @return true se o simbolo foi inserido e false se o simbolo já estava na tabela.
+     * @author Micael Popping.
+     */
+    public boolean inserir(String simbolo, int endereco){
+        
+        if(contem(simbolo))
+            decrementarQuantidadeDados();
+        
+        getSimbolos().put(simbolo, new Simbolo(endereco));
+        
+        return true;
+    }
     
     /**
      * Verifica se o simbolo está presente na tabela.
@@ -116,6 +131,24 @@ class TabelaSimbolos {
     private int getQuantidadeDados(){
         
         return quantidadeDados;
+    }
+    
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    
+    @Override
+    public String toString(){
+        
+        String retorno = "";
+        
+        for(String key : simbolos.keySet()){
+            
+            Simbolo value = simbolos.get(key);
+            retorno += "Simbolo: " + key + value.toString() + "\n";
+        }
+        
+        retorno += "Quantidade de dados: " + quantidadeDados + "\n";
+        
+        return retorno;
     }
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
