@@ -27,14 +27,14 @@ class TabelaSimbolos {
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
     /**
-     * Inser um novo simbolo na tabela de simbolos.
+     * Inserir um novo simbolo na tabela de simbolos.
      * @param simbolo, simbolo que deve ser inserido na tabela.
      * @return true se o simbolo foi inserido e false se o simbolo já estava na tabela.
      * @author Micael Popping.
      */
-    public boolean inserirSimbolo(String simbolo){
+    public boolean inserir(String simbolo){
         
-        if(!contemSimbolo(simbolo))
+        if(!contem(simbolo))
             return false;
         
         getSimbolos().put(simbolo, new Simbolo());
@@ -43,13 +43,15 @@ class TabelaSimbolos {
         return true;
     }
     
+    //inserir
+    
     /**
      * Verifica se o simbolo está presente na tabela.
      * @param simbolo, que dever ser verificada a existencia na tabela.
      * @return true se o simbolo estiver presente e false caso contrario.
      * @author Micael Popping.
      */
-    public boolean contemSimbolo(String simbolo){
+    public boolean contem(String simbolo){
         
         return getSimbolos().containsKey(simbolo);
     }
