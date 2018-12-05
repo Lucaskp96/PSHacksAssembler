@@ -20,6 +20,9 @@ import java.util.Scanner;
 public class Ligador {
     
     public ArrayList <String> codigo;
+    public int linhaUm;
+    public int linhaDois;
+
 
     
     public Ligador(){
@@ -45,7 +48,21 @@ public class Ligador {
     }
     
     public void pegarLinhas(String primeiraLinha, String segundaLinha)throws FileNotFoundException{
-         
+            
+            Scanner realizaLeitura = new Scanner(new FileReader(primeiraLinha)).useDelimiter("\n");
+            Scanner realizaLeituraSegundo = new Scanner(new FileReader(segundaLinha)).useDelimiter("\n");
+        
+            while(realizaLeitura.hasNext()){
+                
+                this.linhaUm = Integer.parseInt(realizaLeitura.nextLine());
+                
+            }
+            
+            while(realizaLeituraSegundo.hasNext()){
+                
+                this.linhaDois = Integer.parseInt(realizaLeituraSegundo.nextLine());
+                
+            }
     }
     
     public void getTabelaDefinicaoSimbololos(String primeiraTabela, String segundaTabela)throws FileNotFoundException{
