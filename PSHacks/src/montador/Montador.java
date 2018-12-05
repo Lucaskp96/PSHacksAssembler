@@ -1,5 +1,6 @@
 package montador;
 
+import gerenciador_arquivo.LeitorArquivo;
 import instrucoes.Instrucoes;
 
 /**
@@ -20,10 +21,11 @@ public class Montador {
         
         CodigoHacks codigoHacks = null;
         
-        if(!verificarExtensaoArquivo(nomeArquivo, "asm"))
+        if(!verificarExtensaoArquivo(nomeArquivo, "txt"))
             return false;
         
-        codigoHacks = montarCodigoHacks(nomeArquivo);
+        if((codigoHacks = montarCodigoHacks(nomeArquivo)) == null)
+            return false;
         
         //escreverArquivoHacks(codigoHacks, nomeArquivo);
         
@@ -56,48 +58,21 @@ public class Montador {
     }
     
     /**
-     * Tira o codigo asm do arquivo, passando para uma estrutura. 
-     * O processo já verifica a sintaxe.
-     * @param nomeArquivo, nome do arquivo que sera convertido em uma estrutura de codigo asm.
-     * @return uma estrutura equivalente ao arquivo contendo o codigo asm.
-     * @author Micael Popping.
-     *
-    private static CodigoAsm retirarDoArquivo(String nomeArquivo){
-        
-        LeitorArquivo leitor = new LeitorArquivo(nomeArquivo);
-        String linha;
-        CodigoAsm codigoAsm = new CodigoAsm();
-        
-        while(true){
-            
-            if((linha = leitor.proximaLinha()) == null)
-                break;
-            
-            //FAZER
-            //Analisar linha
-            //InserirSimbolo
-            //InserirInstrucao
-        }
-        
-        leitor = leitor.close();
-        
-        return codigoAsm;
-    }
-    */
-    
-    /**
      * Monta o codigo, em duas etapas.
      * @param nomeArquivo, nome do arquivo .asm que vai ser montado.
+     * @return uma estrutura codigoHacks caso tudo ocorra bem ou null caso não seja possivel fazer a montagem.
      * @author Micael Popping.
      */
     private static CodigoHacks montarCodigoHacks(String nomeArquivo){
         
-        CodigoAsm codigoAsm = null;
-        //ProcessadorMacros processadorMacros = new ProcessadorMacros();
+        CodigoAsm codigoAsm = new CodigoAsm();
         CodigoHacks codigoHacks = new CodigoHacks();
+        TabelaSimbolos tabelaSimbolos = null;
         
-        //codigoAsm = processarMacros(nomeArquivo);
-        //codigoHacks.setTabelaSimbolos(etapa1(codigoAsm, processadorMacros));
+        if((tabelaSimbolos = etapa1(codigoAsm, nomeArquivo)) == null)
+            return null;
+        //codigoHacks.setTabelaSimbolos(tabelaSimbolos);
+        tabelaSimbolos = null;
         
         etapa2(codigoAsm, codigoHacks);
         
@@ -107,25 +82,31 @@ public class Montador {
     /**
      * A etapa 1 percorre o codigo verificando a sintaxe e montando a tabela de simbolos.
      * @param codigoAsm, codigo assembly que está sendo montado.
-     * @param processadorMacros, processador de macros do codigo asm.
-     * @return a tabela de simbolos do codigo.
+     * @param nomeArquivo, nome do arquivo que está contido o codigo .asm puro.
+     * @return a tabela de simbolos do codigo ou null caso o codigo possua algum erro de sintaxe.
      * @author Micael Popping.
      */
-    private static TabelaSimbolos etapa1(CodigoAsm codigoAsm){
+    private static TabelaSimbolos etapa1(CodigoAsm codigoAsm, String nomeArquivo){
         
-        String analise;
+        String analise, linha;
         TabelaSimbolos tabelaSimbolos = new TabelaSimbolos();
+        LeitorArquivo leitor = new LeitorArquivo(nomeArquivo);
         Instrucoes instrucoes = new Instrucoes();
         
-        for(int i = 0, limite = codigoAsm.getQuantidadeLinhas(); i < limite; i++){
+        while(true){
             
-            if((analise = instrucoes.analisarInstrucao(codigoAsm.pegarLinha(i))) == null)
+            if((linha = leitor.proximaLinha()) == null)
+                break;
+            
+            if((analise = instrucoes.analisarInstrucao(linha)) == null)
                 return null;
-                       
-            if(analise.charAt(0) == 'A');
-                //tabelaSimbolos.inserir(analise.substring(1, analise.length());
+            
+            codigoAsm.inserirLinha(linha);
+            
+            if(analise.charAt(0) == 'A')
+                tabelaSimbolos.inserir(analise.substring(1, analise.length()));
 
-            //FAZER
+            
         }
         
         return tabelaSimbolos;
