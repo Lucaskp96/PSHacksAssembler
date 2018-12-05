@@ -23,6 +23,16 @@ public class Simbolo {
         setLabel(false);
     }
     
+    /**
+     * CONSTRUTOR.
+     * @author Micael Popping.
+     */
+    public Simbolo(int endereco){
+        
+        setEndereco(endereco);
+        setLabel(true);
+    }
+    
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
     
@@ -50,4 +60,12 @@ public class Simbolo {
     }
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=    
+
+   @Override
+    public String toString(){
+        
+        return " Endereco: " + endereco + " Label? " + label;
+    }
+    
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=  
 }
