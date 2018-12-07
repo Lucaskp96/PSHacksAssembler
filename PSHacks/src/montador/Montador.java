@@ -74,6 +74,8 @@ public class Montador {
         codigoHacks.setTabelaSimbolos(tabelaSimbolos);
         tabelaSimbolos = null;
         
+        System.out.println(codigoAsm.toString());
+        
         etapa2(codigoAsm, codigoHacks);
         
         return codigoHacks;
@@ -90,6 +92,7 @@ public class Montador {
         
         String analise, linha;
         TabelaSimbolos tabelaSimbolos = new TabelaSimbolos();
+        int enderecoAtual = 0;
         LeitorArquivo leitor = new LeitorArquivo(nomeArquivo);
         Instrucoes instrucoes = new Instrucoes();
         
@@ -101,11 +104,26 @@ public class Montador {
             if((analise = instrucoes.analisarInstrucao(linha)) == null)
                 return null;
             
-            codigoAsm.inserirLinha(linha);
-            
-            if(analise.charAt(0) == 'A')
+            if(analise.charAt(0) == 'A'){
+                
                 tabelaSimbolos.inserir(analise.substring(1, analise.length()));
+                
+                codigoAsm.inserirLinha(linha);
+                enderecoAtual++;
+            } else      
+            if(analise.charAt(0) == 'L'){
+                
+                tabelaSimbolos.inserir(analise.substring(1, analise.length()), enderecoAtual);
+            } else 
+            if(analise.charAt(0) == 'C'){
+                
+                codigoAsm.inserirLinha(linha);
+                enderecoAtual++;
+            }else
+                return null;
         }
+        
+        System.out.println(tabelaSimbolos.toString());
         
         return tabelaSimbolos;
     }
