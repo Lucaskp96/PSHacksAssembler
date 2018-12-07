@@ -93,4 +93,17 @@ public class CodigoAsm {
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
+    @Override
+    public String toString(){
+        
+        String retorno = "";
+        
+        for(int i = 0, limite = instrucoes.size(); i < limite; i++)
+            retorno += "End.: " + i + " Instr.: " + instrucoes.get(i) + "\n";
+        
+        return retorno;
+    }
+    
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    
 }
