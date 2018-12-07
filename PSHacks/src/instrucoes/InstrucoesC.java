@@ -25,6 +25,56 @@ class InstrucoesC {
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
+     /**
+     * Verifica se a instrução é do tipo C.
+     * @param instrucao, instrução que deve ser verificada.
+     * @author Micael Popping.
+     */
+    public boolean isTipo(String instrucao){
+        
+        int igual, pVirgula;
+        String dest = null, comp = null, jump = null; 
+        
+        igual = instrucao.indexOf('=');
+        pVirgula = instrucao.indexOf(';');
+        
+        if((igual != -1) && (pVirgula == -1)){
+            
+            dest = instrucao.substring(0, igual);
+            comp = instrucao.substring(igual + 1, instrucao.length());
+            
+            if(DEST.containsKey(dest) && COMP.containsKey(comp))
+                return true;
+            else
+                return false;
+        }
+        
+        if((igual == -1) && (pVirgula != -1)){
+            
+            dest = instrucao.substring(0, pVirgula);
+            jump = instrucao.substring(pVirgula + 1, instrucao.length()).trim();
+            
+            if((DEST.containsKey(dest) || COMP.containsKey(dest)) && JUMP.containsKey(jump))
+                return true;
+            return false;
+        }
+        
+        if((igual != -1) && (pVirgula != -1)){
+            
+            dest = instrucao.substring(0, igual);
+            comp = instrucao.substring(igual + 1, pVirgula);
+            jump = instrucao.substring(pVirgula + 1, instrucao.length()).trim();
+            
+            if(DEST.containsKey(dest) && COMP.containsKey(comp) && JUMP.containsKey(jump))
+                return true;
+            return false;
+        }
+        
+        return false;
+    }
+    
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    
     /**
      * Inicia o valor de comp.
      * @return uma estrutura HashMap.
