@@ -51,17 +51,12 @@ public class Instrucoes {
             
             return analise;
         }
-        /*
-        if(instrucao.charAt(0) == '#'){
-            
-            FAZER
-        }
         
         if(instrucoesC.isTipo(instrucao)){
             
-            FAZER
+            return "C";
         }
-        */
+        
         return null;
     }
     
