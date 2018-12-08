@@ -11,7 +11,6 @@ public class CodigoAsm {
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
     private ArrayList<String> instrucoes;
-    private int quantidadeLinhas;
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
@@ -21,7 +20,6 @@ public class CodigoAsm {
     public CodigoAsm(){
         
         setInstrucoes(new ArrayList<>());
-        setQuantidadeLinhas(0);
     }
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -33,8 +31,7 @@ public class CodigoAsm {
      */
     public void inserirLinha(String linha){
         
-        instrucoes.add(linha);
-        incrementarQuantidadeLinhas();
+        getInstrucoes().add(linha);
     }
     
     /**
@@ -45,19 +42,20 @@ public class CodigoAsm {
      */
     public String pegarLinha(int indiceLinha){
         
-        return instrucoes.get(indiceLinha);
+        return getInstrucoes().get(indiceLinha);
+    }
+    
+    /**
+     * Retorna a quantidade de linhas presente no codigoAsm.
+     * @return a quantidade de linhas no codigo asm.
+     * @author Micael Popping.
+     */
+    public int quantidadeLinhas(){
+        
+        return getInstrucoes().size();
     }
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    
-    /**
-     * Incrementa a quantidade de linhas.
-     * @author Micael Popping.
-     */
-    private void incrementarQuantidadeLinhas(){
-        
-        setQuantidadeLinhas(getQuantidadeLinhas() + 1);
-    }
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
@@ -72,23 +70,13 @@ public class CodigoAsm {
     }
     
     /**
-     * Altera o valor de quantidadeLinhas.
-     * @param quantidadeLinhas, novo valor para quantidadeLinhas.
+     * Retorna o valor de instrucoes.
+     * @return o valor de instrucoes.
      * @author Micael Popping.
      */
-    private void setQuantidadeLinhas(int quantidadeLinhas){
+    private ArrayList<String> getInstrucoes(){
         
-        this.quantidadeLinhas = quantidadeLinhas;
-    }
-    
-    /**
-     * Retorna o valor de quantidadeLinhas.
-     * @return valor de quantidadeLinhas.
-     * @author Micael Popping.
-     */
-    public int getQuantidadeLinhas(){
-     
-        return quantidadeLinhas;
+        return instrucoes;
     }
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -98,8 +86,8 @@ public class CodigoAsm {
         
         String retorno = "";
         
-        for(int i = 0, limite = instrucoes.size(); i < limite; i++)
-            retorno += "End.: " + i + " Instr.: " + instrucoes.get(i) + "\n";
+        for(int i = 0, limite = getInstrucoes().size(); i < limite; i++)
+            retorno += "End.: " + i + " Instr.: " + getInstrucoes().get(i) + "\n";
         
         return retorno;
     }
