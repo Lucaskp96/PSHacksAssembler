@@ -51,10 +51,10 @@ class InstrucoesC {
         
         if((igual == -1) && (pVirgula != -1)){
             
-            dest = instrucao.substring(0, pVirgula);
+            comp = instrucao.substring(0, pVirgula);
             jump = instrucao.substring(pVirgula + 1, instrucao.length()).trim();
             
-            if((DEST.containsKey(dest) || COMP.containsKey(dest)) && JUMP.containsKey(jump))
+            if(COMP.containsKey(comp) && JUMP.containsKey(jump))
                 return true;
             return false;
         }
@@ -71,6 +71,30 @@ class InstrucoesC {
         }
         
         return false;
+    }
+    
+    /**
+     *
+     */
+    String compBin(String instrucao){
+        
+        return COMP.get(instrucao);
+    }
+    
+    /**
+     *
+     */
+    String destBin(String instrucao){
+     
+        return DEST.get(instrucao);
+    }
+    
+    /**
+     *
+     */
+    String jumpBin(String instrucao){
+        
+        return JUMP.get(instrucao);
     }
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
