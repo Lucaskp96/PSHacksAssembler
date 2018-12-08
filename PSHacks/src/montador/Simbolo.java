@@ -8,8 +8,9 @@ public class Simbolo {
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
-    private int endereco;
+    private int valor;
     private boolean label;
+    private int endereco;
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -19,7 +20,7 @@ public class Simbolo {
      */
     public Simbolo(){
         
-        setEndereco(-1);
+        setValor(-1);
         setLabel(false);
     }
     
@@ -27,9 +28,9 @@ public class Simbolo {
      * CONSTRUTOR.
      * @author Micael Popping.
      */
-    public Simbolo(int endereco){
+    public Simbolo(int valor){
         
-        setEndereco(endereco);
+        setValor(valor);
         setLabel(true);
     }
     
@@ -40,13 +41,13 @@ public class Simbolo {
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
     /**
-     * Alterar o valor de endereco.
-     * @param endereco, novo valor para endereco.
+     * Alterar o valor de valor.
+     * @param valor, novo valor para valor.
      * @author Micael Popping.
      */
-    private void setEndereco(int endereco){
+    void setValor(int valor){
         
-        this.endereco = endereco;
+        this.valor = valor;
     }
     
     /**
@@ -59,12 +60,52 @@ public class Simbolo {
         this.label = label;
     }
     
+    /**
+     * Alterar o valor de endereco.
+     * @param endereco, novo valor para endereco.
+     * @author Micael Popping.
+     */
+    void setEndereco(int endereco){
+        
+        this.endereco = endereco;
+    }
+    
+    /**
+     * Retorna o valor de valor.
+     * @return o valor de valor.
+     * @author Micael Popping.
+     */
+    int getValor(){
+        
+        return valor;
+    }
+    
+    /**
+     * Retorna o valor de label.
+     * @return o valor de label.
+     * @author Micael Popping.
+     */
+    boolean getLabel(){
+        
+        return label;
+    }
+    
+    /**
+     * Retorna o valor de endereco.
+     * @return o valor de endereco.
+     * @author Micael Popping.
+     */
+    public int getEndereco(){
+        
+        return endereco;
+    }
+    
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=    
 
    @Override
     public String toString(){
         
-        return " Endereco: " + endereco + " Label? " + label;
+        return " | Endereco: " + getEndereco() + " | Valor: " + getValor() + " | Label? " + getLabel();
     }
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=  
