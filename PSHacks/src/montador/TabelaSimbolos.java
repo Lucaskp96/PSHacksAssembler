@@ -11,7 +11,7 @@ public class TabelaSimbolos {
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
     private HashMap<String, Simbolo> simbolos;
-    private int quantidadeDados;
+    private int quantidadeSimbolos;
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
@@ -21,7 +21,7 @@ public class TabelaSimbolos {
     public TabelaSimbolos(){
         
         setSimbolos(new HashMap<>());
-        setQuantidadeDados(0);
+        setQuantidadeSimbolos(0);
     }
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -38,7 +38,7 @@ public class TabelaSimbolos {
             return false;
         
         getSimbolos().put(simbolo, new Simbolo());
-        incrementarQuantidadeDados();
+        atualizarQuantidadeSimbolos();
         
         return true;
     }
@@ -46,16 +46,14 @@ public class TabelaSimbolos {
     /**
      * Inserir um novo simbolo na tabela de simbolos, sabe-se que é um label.
      * @param simbolo, simbolo que deve ser inserido na tabela.
-     * @param endereco, endereco do simbolo que está sendo inserido.
+     * @param valor, valor do simbolo que está sendo inserido.
      * @return true se o simbolo foi inserido e false se o simbolo já estava na tabela.
      * @author Micael Popping.
      */
-    public boolean inserir(String simbolo, int endereco){
-        
-        if(contem(simbolo))
-            decrementarQuantidadeDados();
-        
-        getSimbolos().put(simbolo, new Simbolo(endereco));
+    public boolean inserir(String simbolo, int valor){
+            
+        getSimbolos().put(simbolo, new Simbolo(valor));
+        atualizarQuantidadeSimbolos();
         
         return true;
     }
@@ -71,24 +69,57 @@ public class TabelaSimbolos {
         return getSimbolos().containsKey(simbolo);
     }
     
-//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    
     /**
-     * Incrementa o valor de quantidadeDados.
+     * Gera os enderecos para cada entrada da tabela simbolos.
      * @author Micael Popping.
      */
-    private void incrementarQuantidadeDados(){
+    public void gerarEnderecos(){
         
-        setQuantidadeDados(getQuantidadeDados() + 1);
+        Simbolo simbolo;
+        int enderecoAtual = 0;
+        
+        for (String key : getSimbolos().keySet()) {
+            
+            simbolo = getSimbolos().get(key);
+            
+            simbolo.setEndereco(enderecoAtual);
+            enderecoAtual++;
+        }
     }
     
     /**
-     * Decrementa o valor de quantidadeDados.
+     * Gera uma string baseada na tabela simbolos.
+     * @return string com dados da tabela simbolos.
+     * @authro Micael Popping.
+     */
+    public String gerarStringTabelaSimbolos(){
+        
+        String resultado = "";
+        Simbolo value;
+                
+        for(String key : getSimbolos().keySet()){
+            
+            value = getSimbolos().get(key);
+            resultado += value.getEndereco() + " " + key + " " + value.getValor() + ";";
+        }
+        
+        return resultado;
+    }
+    
+    public Simbolo pegarValor(String simbolo){
+        
+        return getSimbolos().get(simbolo);
+    }
+    
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    
+    /**
+     * Atualiza o valor de quantidadeSimbolos.
      * @author Micael Popping.
      */
-    private void decrementarQuantidadeDados(){
+    private void atualizarQuantidadeSimbolos(){
         
-        setQuantidadeDados(getQuantidadeDados() - 1);
+        setQuantidadeSimbolos(getSimbolos().size());
     }
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -104,13 +135,13 @@ public class TabelaSimbolos {
     }
     
     /**
-     * Altera o valor de quantidadeDados.
-     * @param quantidadeDados, novo valor para quantidadeDados.
+     * Altera o valor de quantidadeSimbolos.
+     * @param quantidadeSimbolos, novo valor para quantidadeSimbolos.
      * @author Micael Popping.
      */
-    private void setQuantidadeDados(int quantidadeDados){
+    private void setQuantidadeSimbolos(int quantidadeSimbolos){
         
-        this.quantidadeDados = quantidadeDados;
+        this.quantidadeSimbolos = quantidadeSimbolos;
     }
     
     /**
@@ -124,13 +155,13 @@ public class TabelaSimbolos {
     }
     
     /**
-     * Retorna o valor de quantidadeDados.
-     * @return o valor de quantidadeDados.
+     * Retorna o valor de quantidadeSimbolos.
+     * @return o valor de quantidadeSimbolos.
      * @author Micael Popping.
      */
-    private int getQuantidadeDados(){
+    public int getQuantidadeSimbolos(){
         
-        return quantidadeDados;
+        return quantidadeSimbolos;
     }
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -138,17 +169,17 @@ public class TabelaSimbolos {
     @Override
     public String toString(){
         
-        String retorno = "";
+        String resultado = "";
         
-        for(String key : simbolos.keySet()){
+        for(String key : getSimbolos().keySet()){
             
-            Simbolo value = simbolos.get(key);
-            retorno += "Simbolo: " + key + value.toString() + "\n";
+            Simbolo value = getSimbolos().get(key);
+            resultado += "Simbolo: " + key + value.toString() + "\n";
         }
         
-        retorno += "Quantidade de dados: " + quantidadeDados + "\n";
+        resultado += "\nQuantidade de simbolos: " + getQuantidadeSimbolos() + "\n";
         
-        return retorno;
+        return resultado;
     }
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
