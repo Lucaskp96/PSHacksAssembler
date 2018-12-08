@@ -1,5 +1,6 @@
 package montador;
 
+import gerenciador_arquivo.EscritorArquivo;
 import gerenciador_arquivo.LeitorArquivo;
 import instrucoes.Instrucoes;
 
@@ -19,7 +20,7 @@ public class Montador {
      */
     public static boolean gerarAquivoHacks(String nomeArquivo){
         
-        CodigoHacks codigoHacks = null;
+        CodigoHacks codigoHacks;
         
         if(!verificarExtensaoArquivo(nomeArquivo, "txt"))
             return false;
@@ -27,7 +28,7 @@ public class Montador {
         if((codigoHacks = montarCodigoHacks(nomeArquivo)) == null)
             return false;
         
-        //escreverArquivoHacks(codigoHacks, nomeArquivo);
+        escreverArquivoHacks(codigoHacks, nomeArquivo);
         
         return true;
     }
@@ -67,16 +68,14 @@ public class Montador {
         
         CodigoAsm codigoAsm = new CodigoAsm();
         CodigoHacks codigoHacks = new CodigoHacks();
-        TabelaSimbolos tabelaSimbolos = null;
+        TabelaSimbolos tabelaSimbolos;
         
         if((tabelaSimbolos = etapa1(codigoAsm, nomeArquivo)) == null)
             return null;
+        
         codigoHacks.setTabelaSimbolos(tabelaSimbolos);
-        tabelaSimbolos = null;
         
-        System.out.println(codigoAsm.toString());
-        
-        etapa2(codigoAsm, codigoHacks);
+        etapa2(codigoAsm, codigoHacks, nomeArquivo);
         
         return codigoHacks;
     }
@@ -104,26 +103,29 @@ public class Montador {
             if((analise = instrucoes.analisarInstrucao(linha)) == null)
                 return null;
             
-            if(analise.charAt(0) == 'A'){
+            switch (analise.charAt(0)) {
                 
-                tabelaSimbolos.inserir(analise.substring(1, analise.length()));
-                
-                codigoAsm.inserirLinha(linha);
-                enderecoAtual++;
-            } else      
-            if(analise.charAt(0) == 'L'){
-                
-                tabelaSimbolos.inserir(analise.substring(1, analise.length()), enderecoAtual);
-            } else 
-            if(analise.charAt(0) == 'C'){
-                
-                codigoAsm.inserirLinha(linha);
-                enderecoAtual++;
-            }else
-                return null;
+                case 'A':
+                    tabelaSimbolos.inserir(analise.substring(1, analise.length()));
+                    codigoAsm.inserirLinha(linha);
+                    enderecoAtual++;
+                    break;
+                    
+                case 'L':
+                    tabelaSimbolos.inserir(analise.substring(1, analise.length()), enderecoAtual);
+                    break;
+                    
+                case 'C':
+                    codigoAsm.inserirLinha(linha);
+                    enderecoAtual++;
+                    break;
+                    
+                default:
+                    return null;
+            }
         }
         
-        System.out.println(tabelaSimbolos.toString());
+        tabelaSimbolos.gerarEnderecos();
         
         return tabelaSimbolos;
     }
@@ -132,12 +134,49 @@ public class Montador {
      * A etapa 2 percorre o codigo substituindo os simbolos e gerando as instrucoes binarias.
      * @param codigoAsm, codigo assembly que está sendo montado.
      * @param codigoHacks, o codigo hacks que está sendo gerado.
+     * @param nomeArquivo, nome do arquivo.
      * @author Micael Popping.
      */
-    private static void etapa2(CodigoAsm codigoAsm, CodigoHacks codigoHacks){
-        /*
-        FAZER
-        */  
+    private static void etapa2(CodigoAsm codigoAsm, CodigoHacks codigoHacks, String nomeArquivo){
+            
+        String linhaInstrucao, linhaBin;
+        Instrucoes instrucoes = new Instrucoes();
+        
+        //Inserindo cabeçalho
+        codigoHacks.inserirTabelaSimbolos();
+        
+        //Inserindo instrucoes
+        codigoHacks.inserirLinha(String.valueOf(codigoAsm.quantidadeLinhas()));
+        
+        for(int i =0, limite = codigoAsm.quantidadeLinhas(); i < limite; i++){
+            
+            linhaInstrucao = codigoAsm.pegarLinha(i);
+            
+            if(linhaInstrucao.charAt(0) == '@'){
+                
+                linhaBin = instrucoes.gerarLinhaBin(linhaInstrucao, codigoHacks.pegarSimbolo(linhaInstrucao.substring(1, linhaInstrucao.length())));
+                codigoHacks.inserirLinha(linhaBin);
+            }else{
+                
+                linhaBin = instrucoes.gerarLinhaBin(linhaInstrucao);
+                codigoHacks.inserirLinha(linhaBin);
+            }
+        }    
+    }
+    
+    /**
+     *
+     */
+    private static void escreverArquivoHacks(CodigoHacks codigoHacks, String nomeArquivo){
+        
+        EscritorArquivo escritor = new EscritorArquivo(nomeArquivo);
+        
+        for(int i = 0, limite = codigoHacks.getTamanhoCodigoHacks(); i < limite; i++){
+            
+            escritor.escreverLinha(codigoHacks.pegarLinha(i));
+        }
+        
+        escritor.close();
     }
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
