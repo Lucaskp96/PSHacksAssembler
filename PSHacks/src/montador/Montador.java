@@ -1,5 +1,7 @@
 package montador;
 
+import gerenciador_arquivo.EscritorArquivo;
+import gerenciador_arquivo.LeitorArquivo;
 import instrucoes.Instrucoes;
 
 /**
@@ -18,14 +20,15 @@ public class Montador {
      */
     public static boolean gerarAquivoHacks(String nomeArquivo){
         
-        CodigoHacks codigoHacks = null;
+        CodigoHacks codigoHacks;
         
-        if(!verificarExtensaoArquivo(nomeArquivo, "asm"))
+        if(!verificarExtensaoArquivo(nomeArquivo, "txt"))
             return false;
         
-        codigoHacks = montarCodigoHacks(nomeArquivo);
+        if((codigoHacks = montarCodigoHacks(nomeArquivo)) == null)
+            return false;
         
-        //escreverArquivoHacks(codigoHacks, nomeArquivo);
+        escreverArquivoHacks(codigoHacks, nomeArquivo);
         
         return true;
     }
@@ -56,50 +59,23 @@ public class Montador {
     }
     
     /**
-     * Tira o codigo asm do arquivo, passando para uma estrutura. 
-     * O processo já verifica a sintaxe.
-     * @param nomeArquivo, nome do arquivo que sera convertido em uma estrutura de codigo asm.
-     * @return uma estrutura equivalente ao arquivo contendo o codigo asm.
-     * @author Micael Popping.
-     *
-    private static CodigoAsm retirarDoArquivo(String nomeArquivo){
-        
-        LeitorArquivo leitor = new LeitorArquivo(nomeArquivo);
-        String linha;
-        CodigoAsm codigoAsm = new CodigoAsm();
-        
-        while(true){
-            
-            if((linha = leitor.proximaLinha()) == null)
-                break;
-            
-            //FAZER
-            //Analisar linha
-            //InserirSimbolo
-            //InserirInstrucao
-        }
-        
-        leitor = leitor.close();
-        
-        return codigoAsm;
-    }
-    */
-    
-    /**
      * Monta o codigo, em duas etapas.
      * @param nomeArquivo, nome do arquivo .asm que vai ser montado.
+     * @return uma estrutura codigoHacks caso tudo ocorra bem ou null caso não seja possivel fazer a montagem.
      * @author Micael Popping.
      */
     private static CodigoHacks montarCodigoHacks(String nomeArquivo){
         
-        CodigoAsm codigoAsm = null;
-        //ProcessadorMacros processadorMacros = new ProcessadorMacros();
+        CodigoAsm codigoAsm = new CodigoAsm();
         CodigoHacks codigoHacks = new CodigoHacks();
+        TabelaSimbolos tabelaSimbolos;
         
-        //codigoAsm = processarMacros(nomeArquivo);
-        //codigoHacks.setTabelaSimbolos(etapa1(codigoAsm, processadorMacros));
+        if((tabelaSimbolos = etapa1(codigoAsm, nomeArquivo)) == null)
+            return null;
         
-        etapa2(codigoAsm, codigoHacks);
+        codigoHacks.setTabelaSimbolos(tabelaSimbolos);
+        
+        etapa2(codigoAsm, codigoHacks, nomeArquivo);
         
         return codigoHacks;
     }
@@ -107,26 +83,49 @@ public class Montador {
     /**
      * A etapa 1 percorre o codigo verificando a sintaxe e montando a tabela de simbolos.
      * @param codigoAsm, codigo assembly que está sendo montado.
-     * @param processadorMacros, processador de macros do codigo asm.
-     * @return a tabela de simbolos do codigo.
+     * @param nomeArquivo, nome do arquivo que está contido o codigo .asm puro.
+     * @return a tabela de simbolos do codigo ou null caso o codigo possua algum erro de sintaxe.
      * @author Micael Popping.
      */
-    private static TabelaSimbolos etapa1(CodigoAsm codigoAsm){
+    private static TabelaSimbolos etapa1(CodigoAsm codigoAsm, String nomeArquivo){
         
-        String analise;
+        String analise, linha;
         TabelaSimbolos tabelaSimbolos = new TabelaSimbolos();
+        int enderecoAtual = 0;
+        LeitorArquivo leitor = new LeitorArquivo(nomeArquivo);
         Instrucoes instrucoes = new Instrucoes();
         
-        for(int i = 0, limite = codigoAsm.getQuantidadeLinhas(); i < limite; i++){
+        while(true){
             
-            if((analise = instrucoes.analisarInstrucao(codigoAsm.pegarLinha(i))) == null)
+            if((linha = leitor.proximaLinha()) == null)
+                break;
+            
+            if((analise = instrucoes.analisarInstrucao(linha)) == null)
                 return null;
-                       
-            if(analise.charAt(0) == 'A');
-                //tabelaSimbolos.inserir(analise.substring(1, analise.length());
-
-            //FAZER
+            
+            switch (analise.charAt(0)) {
+                
+                case 'A':
+                    tabelaSimbolos.inserir(analise.substring(1, analise.length()));
+                    codigoAsm.inserirLinha(linha);
+                    enderecoAtual++;
+                    break;
+                    
+                case 'L':
+                    tabelaSimbolos.inserir(analise.substring(1, analise.length()), enderecoAtual);
+                    break;
+                    
+                case 'C':
+                    codigoAsm.inserirLinha(linha);
+                    enderecoAtual++;
+                    break;
+                    
+                default:
+                    return null;
+            }
         }
+        
+        tabelaSimbolos.gerarEnderecos();
         
         return tabelaSimbolos;
     }
@@ -135,12 +134,49 @@ public class Montador {
      * A etapa 2 percorre o codigo substituindo os simbolos e gerando as instrucoes binarias.
      * @param codigoAsm, codigo assembly que está sendo montado.
      * @param codigoHacks, o codigo hacks que está sendo gerado.
+     * @param nomeArquivo, nome do arquivo.
      * @author Micael Popping.
      */
-    private static void etapa2(CodigoAsm codigoAsm, CodigoHacks codigoHacks){
-        /*
-        FAZER
-        */  
+    private static void etapa2(CodigoAsm codigoAsm, CodigoHacks codigoHacks, String nomeArquivo){
+            
+        String linhaInstrucao, linhaBin;
+        Instrucoes instrucoes = new Instrucoes();
+        
+        //Inserindo cabeçalho
+        codigoHacks.inserirTabelaSimbolos();
+        
+        //Inserindo instrucoes
+        codigoHacks.inserirLinha(String.valueOf(codigoAsm.quantidadeLinhas()));
+        
+        for(int i =0, limite = codigoAsm.quantidadeLinhas(); i < limite; i++){
+            
+            linhaInstrucao = codigoAsm.pegarLinha(i);
+            
+            if(linhaInstrucao.charAt(0) == '@'){
+                
+                linhaBin = instrucoes.gerarLinhaBin(linhaInstrucao, codigoHacks.pegarSimbolo(linhaInstrucao.substring(1, linhaInstrucao.length())));
+                codigoHacks.inserirLinha(linhaBin);
+            }else{
+                
+                linhaBin = instrucoes.gerarLinhaBin(linhaInstrucao);
+                codigoHacks.inserirLinha(linhaBin);
+            }
+        }    
+    }
+    
+    /**
+     *
+     */
+    private static void escreverArquivoHacks(CodigoHacks codigoHacks, String nomeArquivo){
+        
+        EscritorArquivo escritor = new EscritorArquivo(nomeArquivo);
+        
+        for(int i = 0, limite = codigoHacks.getTamanhoCodigoHacks(); i < limite; i++){
+            
+            escritor.escreverLinha(codigoHacks.pegarLinha(i));
+        }
+        
+        escritor.close();
     }
     
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
